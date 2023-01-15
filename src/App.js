@@ -7,14 +7,11 @@ function App() {
   
   return (
     <div className='test'>
-    <div className='App'>
-      <Index/>
-      
-    </div>
+      <div className='App'>
+        <Index/>
+      </div>
     </div>
   );
 }
 
 export default App;
-
-//<StatsMaker/>
