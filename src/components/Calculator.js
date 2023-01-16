@@ -15,7 +15,9 @@ const Calculator = (props) => {
         ]
     )
 
-    const theStatList = calcState.map((stats) => <li key={stats.toString()}>{stats}</li>)
+    const theStatList = calcState.map((stats) => 
+        <li key={stats.toString()}>{stats}</li>
+        )
 
     return(
         <>
