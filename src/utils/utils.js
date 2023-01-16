@@ -1,5 +1,3 @@
-import React from 'react';
-
 const error = 'error code 500'
 
 const responses = [10, 12, 8, 20, 24, 23, 54, 90, error, 33, 21, 18, 16, error, error]
