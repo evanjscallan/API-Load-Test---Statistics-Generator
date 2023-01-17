@@ -1,16 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
-import Index from './components/Index.js'
+import Index from './components/Index'
 import StatsMaker from './GlobalVarsComp'
+import React from 'react'
 
-function App() {
+const App: React.FC = (): JSX.Element => {
   
   return (
+    <>
     <div className='test'>
       <div className='App'>
         <Index/>
       </div>
     </div>
+    </>
   );
 }
 
