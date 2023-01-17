@@ -4,7 +4,7 @@ import { filteredResponses } from './../utils/utils';
 import './../App.css';
 
 
-const obj =  filteredResponses.map((x, i) => {
+const obj = filteredResponses.map((x: any, i: any) => {
             return {
             name: `Request: ${i + 1}`, 
             response: x,
@@ -12,7 +12,7 @@ const obj =  filteredResponses.map((x, i) => {
 })
 
 
-const RenderLineChart = (props) => {
+const RenderLineChart: React.FC = (props: object): JSX.Element => {
     return(
         <div className='titleText'>
         <LineChart width={900} height={400} data={obj}>

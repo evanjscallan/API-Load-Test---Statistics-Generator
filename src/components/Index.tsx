@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
+import RenderLineChart from './Chart'
 import Calculator from './Calculator'
-import RenderLineChart from './Chart';
-import './../App.css';
-const Index = () => {
+
+
+const Index: React.FC = (props: any): JSX.Element => {
     return(
         <>
         <div className='separatorBox'>
