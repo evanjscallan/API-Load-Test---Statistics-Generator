@@ -1,51 +1,55 @@
+let JSONResult = require('./loadTestResults.json')
+
 interface Nums{
     avgResponseTime: number | string
     a: string | number,
     b: string | number
 }
 
-const error: string = 'error code 500'
+let responseArr: number[] = JSONResult['results']['0']['times']
 
-const responses: (number | string)[] = [10, 12, 8, 20, 24, 23, 54, 90, error, 33, 21, 18, 16, error, error]
+const error: 'error code 500' = 'error code 500'
+
+const responses: (number | string)[] = responseArr ? responseArr : [0, 0]
 
 const dummyData: number[] = [6, 2, 3, 1]
 
-const filteredResponses: any[]  = responses.filter(e => e != 'error code 500')
+const filteredResponses: object = responses.filter(e => e != 'error code 500') as number[]
 
-const avgResponseTime: number | string | Nums  = filteredResponses.reduce((a, b) => a + b) / filteredResponses.length
+const avgResponseTime: number = responseArr.reduce((a, b) => a + b) / responseArr.length
 
-const dataPoints: number = filteredResponses.length
+const dataPoints: number = responseArr.length
 
 let distanceArr: number[] = []
 
-const distanceFromMeanSq = (filteredResponses: string[] | number[] | any[], distanceArr: number[], avgResponseTime: number) => {
-    for (let i=0; i<filteredResponses.length; i++){
-        distanceArr.push(Math.abs(filteredResponses[i] - avgResponseTime)**2)
+const distanceFromMeanSq = (responseArr: any[], distanceArr: number[], avgResponseTime: number) => {
+    for (let i=0; i<responseArr.length; i++){
+        distanceArr.push(Math.abs(responseArr[i] - avgResponseTime)**2)
     }
     return distanceArr
 }
 
-const distances: number[] = distanceFromMeanSq(filteredResponses, distanceArr, avgResponseTime)
+const distances: number[] = distanceFromMeanSq(responseArr, distanceArr, avgResponseTime)
 
-const sumDistances = (distances: number[]) => { return distances.reduce((a: number, b: number) => a + b) }
+const sumDistances = (distances: number[]) => distances.reduce((a, b) => a + b)
 
 const distanceSums: number = sumDistances(distances)
 
-const divideByDataPoints: any = (distanceSums: any, dataPoints: any) => { return distanceSums / dataPoints }
+const divideByDataPoints = (distanceSums: number, dataPoints: number) => distanceSums / dataPoints 
 
 const variance: number = divideByDataPoints(distanceSums, dataPoints)
 
-const stdDeviation = (variance: number) => { return Math.sqrt(variance) }
+const stdDeviation = (variance: number) => Math.sqrt(variance)
 
 const stdDev: number = stdDeviation(variance)
 
-const zValue95Percent: number = 1.96
+const zValue95Percent: 1.96 = 1.96
 
-const confidenceLvlUpper = (zValue95Percent: any,avgResponseTime: any, stdDev: any ,dataPoints: any) => {
+const confidenceLvlUpper = (zValue95Percent: number, avgResponseTime: number, stdDev: number ,dataPoints: number) => {
     return avgResponseTime + (zValue95Percent * (((stdDev)/(Math.sqrt(dataPoints))))) 
 }
 
-const confidenceLvlLower = (zValue95Percent: any ,avgResponseTime: any,stdDev: any,dataPoints: any) => {
+const confidenceLvlLower = (zValue95Percent: number ,avgResponseTime: number,stdDev: number,dataPoints: number) => {
     return avgResponseTime - (zValue95Percent * ((stdDev)/(Math.sqrt(dataPoints))))  
 }
 
@@ -54,4 +58,4 @@ const confidenceLevelLower = confidenceLvlLower(zValue95Percent,avgResponseTime,
 
 
 export {confidenceLevelUpper, confidenceLevelLower, stdDeviation, distances, sumDistances, dataPoints,
-avgResponseTime, responses, filteredResponses, dummyData, distanceSums, variance, stdDev};
+avgResponseTime, responses, responseArr, dummyData, distanceSums, variance, stdDev};
