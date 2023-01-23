@@ -1,0 +1,4 @@
+{
+    "vim.targets.smartQuotes.breakThroughLines": false,
+    "vim.disableExtension": true
+}
